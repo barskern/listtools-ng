@@ -6,7 +6,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "listtools-ng"
 PROJECT_NUMBER         =
-PROJECT_BRIEF          = "Neste-generasjons bibliotek for å håndtere ulike typer lister og køer."
+PROJECT_BRIEF          = "Et bibliotek bestående av en headerfil som implementerer en lenket liste"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
