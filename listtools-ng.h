@@ -155,13 +155,13 @@ public:
 
   //! Se på det første elementet i listen, hvis det eksisterer
   /*!
-   * \return enten en peker til den første verdien eller en `nullptr` hvis
-   * listen er tom
+   * \return en `Option` som inneholder en peker til det første elementet i
+   * listen dersom listen ikke er tom
    */
-  T *front() {
+  Option<T *> front() {
     if (this->head == nullptr)
-      return nullptr;
-    return &this->head->value;
+      return Option<T *>();
+    return Option<T *>(&this->head->value);
   }
 };
 
