@@ -70,7 +70,8 @@ public:
  * en [FIFO-kø (First In First
  * Out)](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)) og en
  * [stack/LIFO-kø (Last In First
- * Out)](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
+ * Out)](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)) (når man
+ * trenger en stack, så passer en `std::vector` bedre enn en `List`).
  *
  * Listen er generisk over typen `T`, altså de ulike verdiene den kan holde.
  * Det vil si at hvis man vil definere en liste med heltall, så gjøres det med
