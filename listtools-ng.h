@@ -1,6 +1,11 @@
 #ifndef LISTTOOLS_NG_INCLUDE_ONCE
 #define LISTTOOLS_NG_INCLUDE_ONCE
 
+#define ASSERT(expr, msg)                                                      \
+  if (!expr) {                                                                 \
+    throw std::logic_error(msg);                                               \
+  }
+
 /*! \file listtools-ng.h
  *  \brief Implementasjon av en enkel lenket liste
  *
@@ -9,6 +14,8 @@
  *  inkludere `listtools-ng` i et annet prosjekt er inkludere denne filen i
  *  kildekoden til prosjektet.
  */
+
+#include <stdexcept>
 
 //! En verdi som enten er tilstede eller ikke
 /*!
@@ -21,19 +28,39 @@
  * et bra resultat når en liste er tom, siden da er det jo ingen elementer å
  * gi.
  */
-template <class T> struct Option {
-  bool has_value;
-  T value;
+template <class T> class Option {
+private:
+  bool ok;
+  T v;
 
-  Option() : has_value(false) {}
-  Option(T val) : has_value(true), value(val) {}
+public:
+  Option() : ok(false) {}
+  Option(T val) : ok(true), v(val) {}
+
+  //! Henter ut verdien
+  /*!
+   * _**NB!** Dersom verdien ikke eksisterer så kastes det et unntak
+   * (exception).
+   *
+   * \return verdien
+   */
+  T value() {
+    ASSERT(this->ok, "Kalte `value` på en ikke-eksisterene `Option`");
+    return this->v;
+  }
+
+  //! Sjekker om verdien eksisterer
+  /*!
+   * \return sann hvis verdien eksisterer, ellers usann
+   */
+  bool has_value() { return this->ok; }
 
   //! En nyttefunksjon som gjør det enkelt å gi en reserve-verdi til en `Option`
   /*!
    * \param reserve verdien som gis hvis den nåværende verdien ikke eksisterer
    * \return verdien hvis den eksisterer, ellers gis reserve verdien
    */
-  T value_or(T reserve) { return this->has_value ? this->value : reserve; }
+  T value_or(T reserve) { return this->ok ? this->v : reserve; }
 };
 
 //! En lenket liste

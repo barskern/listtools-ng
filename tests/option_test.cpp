@@ -7,7 +7,7 @@ SCENARIO( "en `Option` kan representere en verdi som kanskje er tilstede", "[Lis
 
         Option<int> empty;
 
-        REQUIRE( !empty.has_value );
+        REQUIRE( !empty.has_value() );
 
         WHEN( "den brukes for å gi en reserve verdi" ) {
 
@@ -21,12 +21,12 @@ SCENARIO( "en `Option` kan representere en verdi som kanskje er tilstede", "[Lis
 
         Option<int> full(1);
 
-        REQUIRE( full.has_value );
+        REQUIRE( full.has_value() );
 
         WHEN( "man ønsker å bruke verdien" ) {
 
             THEN( "returnerer den den tidligere gitte verdien" ) {
-                REQUIRE( full.value == 1 );
+                REQUIRE( full.value() == 1 );
             }
         }
 
