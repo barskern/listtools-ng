@@ -1,0 +1,7 @@
+language: cpp
+compiler:
+    - clang
+    - gcc
+script: make clean && make test
+notifications:
+    email: false

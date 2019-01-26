@@ -33,3 +33,6 @@
 
 # doxygen folder
 docs/
+
+# build folder
+build/
