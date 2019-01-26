@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main()
-#include "catch.h"
+#include "catch.hpp"
 #include "../listtools-ng.h"
 
 SCENARIO( "lister kan legge til elementer foran i listen og se på dem", "[List]" ) {
