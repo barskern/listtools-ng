@@ -10,6 +10,32 @@
  *  kildekoden til prosjektet.
  */
 
+//! En verdi som enten er tilstede eller ikke
+/*!
+ * _*NB!* Når man har en `Option` er viktig at man **alltid** sjekker
+ * `has_value` før man bruker `value`._
+ *
+ * Dette brukes til å definere verdier som kanskje ikke er tilstede, altså det
+ * er normalt at denne kan være tom. Dette brukes for å kunne symbolisere at en
+ * funksjon kanskje returnerer en verdi. Denne typen er nyttig for å kunne gi
+ * et bra resultat når en liste er tom, siden da er det jo ingen elementer å
+ * gi.
+ */
+template <class T> struct Option {
+  bool has_value;
+  T value;
+
+  Option() : has_value(false) {}
+  Option(T val) : has_value(true), value(val) {}
+
+  //! En nyttefunksjon som gjør det enkelt å gi en reserve-verdi til en `Option`
+  /*!
+   * \param reserve verdien som gis hvis den nåværende verdien ikke eksisterer
+   * \return verdien hvis den eksisterer, ellers gis reserve verdien
+   */
+  T value_or(T reserve) { return this->has_value ? this->value : reserve; }
+};
+
 //! En lenket liste
 /*!
  * Listen sørger for at alle elementene er linket sammen ved at hvert element
