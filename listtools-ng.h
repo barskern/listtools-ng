@@ -163,6 +163,29 @@ public:
       return Option<T *>();
     return Option<T *>(&this->head->value);
   }
+
+  //! Fjern og returner det første elementet i listen, hvis det eksisterer
+  /*!
+   * \return en `Option` som inneholder det første elementet dersom listen ikke
+   * er tom
+   */
+  Option<T> pop_front() {
+    // The list is empty so we return an empty option
+    if (this->head == nullptr)
+      return Option<T>();
+
+    // Hent ut verdien og den neste noden fra den første noden
+    T val = this->head->value;
+    Node *new_head = this->head->next;
+    delete this->head;
+
+    this->head = new_head;
+    // Hvis det nye hodet er nullptr, så betyr det at listen er tom
+    if (this->head == nullptr)
+      this->tail = nullptr;
+
+    return Option<T>(val);
+  }
 };
 
 #endif

@@ -29,3 +29,47 @@ SCENARIO( "elementer kan legges til foran i listen og man kan se på dem", "[Lis
         }
     }
 }
+
+SCENARIO( "elementer kan fjernes fra starten av listen", "[List]" ) {
+
+    GIVEN( "En liste som ikke er tom" ) {
+        List<int> list;
+
+        list.push_front(5);
+        list.push_front(10);
+        list.push_front(15);
+
+        REQUIRE( list.front().has_value() );
+
+        WHEN( "et element fjernes fra starten av listen" ) {
+
+            int v = list.pop_front().value();
+
+            THEN( "får man tilbake det siste elementet som ble lagt til listen" ) {
+                REQUIRE( v == 15 );
+            }
+
+            THEN( "er det neste elementet på listen foran på listen" ) {
+                REQUIRE( *list.front().value() == 10 );
+            }
+        }
+        WHEN( "alle elementene fjernes fra listen" ) {
+
+            REQUIRE( list.pop_front().has_value() );
+            REQUIRE( list.pop_front().has_value() );
+            REQUIRE( list.pop_front().has_value() );
+
+            THEN( "er det første elementet tomt" ) {
+                REQUIRE( !list.front().has_value() );
+            }
+
+            THEN( "skjer det ingenting dersom man prøver å fjerne flere elementer" ) {
+                REQUIRE( !list.pop_front().has_value() );
+                REQUIRE( !list.pop_front().has_value() );
+                REQUIRE( !list.pop_front().has_value() );
+
+                REQUIRE( !list.front().has_value() );
+            }
+        }
+    }
+}
