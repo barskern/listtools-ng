@@ -170,17 +170,17 @@ public:
    * er tom
    */
   Option<T> pop_front() {
-    // The list is empty so we return an empty option
+    // Listen er tom så vi returnerer ingenting
     if (this->head == nullptr)
       return Option<T>();
 
-    // Hent ut verdien og den neste noden fra den første noden
+    // Hent ut verdien og den neste noden fra den første noden i listen
     T val = this->head->value;
     Node *new_head = this->head->next;
     delete this->head;
 
     this->head = new_head;
-    // Hvis det nye hodet er nullptr, så betyr det at listen er tom
+    // Hvis det nye hodet er null, så betyr det at listen er tom
     if (this->head == nullptr)
       this->tail = nullptr;
 
