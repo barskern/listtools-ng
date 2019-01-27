@@ -147,7 +147,7 @@ public:
     };
     this->head = new_head;
 
-    // Hvis halen er null (listen er tom), så er den nye noden både hode og hale
+    // Listen var tom, så den nye noden er både hodet og halen
     if (this->tail == nullptr) {
       this->tail = this->head;
     }
@@ -170,11 +170,11 @@ public:
    * er tom
    */
   Option<T> pop_front() {
-    // Listen er tom så vi returnerer ingenting
+    // Listen er tom, så funksjonen returnerer en tom `Option`
     if (this->head == nullptr)
       return Option<T>();
 
-    // Hent ut verdien og den neste noden fra den første noden i listen
+    // Lagre verdiene fra den første noden før vi de-allokerer den
     T val = this->head->value;
     Node *new_head = this->head->next;
     delete this->head;
