@@ -14,7 +14,7 @@ SCENARIO( "elementer kan legges til foran i listen og man kan se på dem", "[Lis
             list.push_front(5);
 
             THEN( "kan man se på det første elementet" ) {
-                REQUIRE( *list.front().value() == 5 );
+                REQUIRE( list.front().value() == 5 );
             }
         }
         WHEN( "flere element legges foran i listen" ) {
@@ -24,7 +24,7 @@ SCENARIO( "elementer kan legges til foran i listen og man kan se på dem", "[Lis
             list.push_front(15);
 
             THEN( "er det siste elementet som ligger foran" ) {
-                REQUIRE( *list.front().value() == 15 );
+                REQUIRE( list.front().value() == 15 );
             }
         }
     }
@@ -50,7 +50,7 @@ SCENARIO( "elementer kan fjernes fra starten av listen", "[List]" ) {
             }
 
             THEN( "er det neste elementet på listen foran på listen" ) {
-                REQUIRE( *list.front().value() == 10 );
+                REQUIRE( list.front().value() == 10 );
             }
         }
         WHEN( "alle elementene fjernes fra listen" ) {

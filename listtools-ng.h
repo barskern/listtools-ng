@@ -19,14 +19,8 @@
 
 //! En verdi som enten er tilstede eller ikke
 /*!
- * _*NB!* Når man har en `Option` er viktig at man **alltid** sjekker
- * `has_value` før man bruker `value`._
- *
- * Dette brukes til å definere verdier som kanskje ikke er tilstede, altså det
- * er normalt at denne kan være tom. Dette brukes for å kunne symbolisere at en
- * funksjon kanskje returnerer en verdi. Denne typen er nyttig for å kunne gi
- * et bra resultat når en liste er tom, siden da er det jo ingen elementer å
- * gi.
+ * Denne klassen brukes for å definere verdier som kanskje ikke er tilstede.
+ * Spesielt er dette nyttig for funksjoner som _kanskje_ returnerer en verdi.
  */
 template <class T> class Option {
 private:
@@ -37,10 +31,11 @@ public:
   Option() : ok(false) {}
   Option(T val) : ok(true), v(val) {}
 
-  //! Henter ut verdien
+  //! Henter ut verdien dersom den eksisterer
   /*!
    * _**NB!** Dersom verdien ikke eksisterer så kastes det et unntak
-   * (exception).
+   * (exception) av typen_
+   * [`std::logic_error`](http://www.cplusplus.com/reference/stdexcept/logic_error/).
    *
    * \return verdien
    */
@@ -51,16 +46,48 @@ public:
 
   //! Sjekker om verdien eksisterer
   /*!
-   * \return sann hvis verdien eksisterer, ellers usann
+   * \return `true` hvis verdien eksisterer, ellers `false`
    */
   bool has_value() { return this->ok; }
 
-  //! En nyttefunksjon som gjør det enkelt å gi en reserve-verdi til en `Option`
+  //! Gi en reserve verdi som vil bli returnert dersom verdien ikke eksisterer
   /*!
-   * \param reserve verdien som gis hvis den nåværende verdien ikke eksisterer
-   * \return verdien hvis den eksisterer, ellers gis reserve verdien
+   * \param reserve verdien
+   * \return verdien hvis den eksisterer, ellers reserve verdien
    */
   T value_or(T reserve) { return this->ok ? this->v : reserve; }
+};
+
+//! Spesialisering av `Option` for referanser
+/*!
+ * Denne implementasjonen må til for at `Option` skal kunne inneholde en
+ * referanse. Se dokumentasjonen for `Option` for informasjon om hvordan
+ * klassen skal benyttes.
+ */
+template <class T> class Option<T &> {
+private:
+  bool ok;
+  T *v;
+
+public:
+  Option() : ok(false), v(nullptr) {}
+  Option(T &val) : ok(true), v(&val) {}
+
+  T &value() {
+    ASSERT(this->ok, "Kalte `value` på en ikke-eksisterene `Option`");
+    // Dette er alltid trygt fordi vi tok adressen til en referanse da vi
+    // konstruerte klassen.
+    return *this->v;
+  }
+
+  bool has_value() { return this->ok; }
+
+  T &value_or(T &reserve) { return this->ok ? *this->v : reserve; }
+
+  // Denne definisjonen må til for å kunne gi `value_or` en konstant istedenfor
+  // en referanse til en variabel. Dette lar oss skrive `opt.value_or(2)` for
+  // `Option`'s som inneholder referanser.
+  const T &value_or(T const &reserve) { return this->ok ? *this->v : reserve; }
 };
 
 //! En lenket liste
@@ -87,21 +114,19 @@ public:
  *
  * ```cpp
  * int main(){
- *     List<float> list;
+ *     List<int> list;
  *
  *     list.push_front(5);
- *     cout << *list.front() << endl;
+ *     cout << list.front().value() << endl; // Printer '5'
  *
  *     list.push_front(10);
- *     cout << *list.front() << endl;
+ *     cout << list.front().value() << endl; // Printer '10'
+ *
+ *     // Fjern det første elementet i listen
+ *     int front = list.pop_front().value();
+ *     cout << front << endl;                // Printer '10'
+ *     cout << list.front().value() << endl; // Printer '5'
  * }
- * ```
- *
- * #### Utgangsverdier
- *
- * ```
- * 5
- * 10
  * ```
  */
 template <class T> class List {
@@ -158,10 +183,10 @@ public:
    * \return en `Option` som inneholder en peker til det første elementet i
    * listen dersom listen ikke er tom
    */
-  Option<T *> front() {
+  Option<T &> front() {
     if (this->head == nullptr)
-      return Option<T *>();
-    return Option<T *>(&this->head->value);
+      return Option<T &>();
+    return Option<T &>(this->head->value);
   }
 
   //! Fjern og returner det første elementet i listen, hvis det eksisterer
