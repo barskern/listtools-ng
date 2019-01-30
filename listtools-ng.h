@@ -1,10 +1,15 @@
 #ifndef LISTTOOLS_NG_INCLUDE_ONCE
 #define LISTTOOLS_NG_INCLUDE_ONCE
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+//! Sjekket at et uttrykk stemmer eller kaste et unntak (exception).
 #define ASSERT(expr, msg)                                                      \
   if (!expr) {                                                                 \
     throw std::logic_error(msg);                                               \
   }
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \file listtools-ng.h
  *  \brief Implementasjon av en enkel lenket liste
@@ -228,4 +233,4 @@ public:
   }
 };
 
-#endif
+#endif /* LISTTOOLS_NG_INCLUDE_ONCE */
