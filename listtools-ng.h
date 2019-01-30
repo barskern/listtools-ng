@@ -87,7 +87,21 @@ public:
   // Denne definisjonen må til for å kunne gi `value_or` en konstant istedenfor
   // en referanse til en variabel. Dette lar oss skrive `opt.value_or(2)` for
   // `Option`'s som inneholder referanser.
-  const T &value_or(T const &reserve) { return this->ok ? *this->v : reserve; }
+  const T &value_or(T const &reserve) {
+    // Grunnet at gcc 4.X.X ikke konkluderer med den korrekte retur-typen når
+    // man benytter en ternær operatør, så må vi benytte en if/else-uttalelse.
+    // Feilen gjør at vi refererer til en lokal variabel som ikke eksisterer,
+    // til tross for at den returneres "by-value", og dermed får man feil
+    // retur-verdi.
+    //
+    // Ref: https://gcc.gnu.org/ml/gcc-bugs/2000-03/msg00353.html
+    // Ref: https://gcc.gnu.org/ml/gcc-bugs/2000-03/msg00485.html
+    if (this->ok) {
+      return *this->v;
+    } else {
+      return reserve;
+    }
+  }
 };
 
 //! En lenket liste
