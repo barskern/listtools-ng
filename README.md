@@ -12,22 +12,28 @@ Alt som trengs for å få tilgang til biblioteket er å skrive  `#include "listt
 ## Eksempel
 
 ```cpp
-int main(){
-    List<int> list;
+#include "listtools-ng.h"
+#include <iostream>
 
-    list.push_front(5);
-    cout << list.front().value() << endl; // Printer '5'
+int main() {
+  List<int> list;
 
-    list.push_front(10);
-    cout << list.front().value() << endl; // Printer '10'
+  list.push_front(5);
+  std::cout << list.front().value() << std::endl; // Printer '5'
 
-    // Fjern det første elementet i listen
-    int front = list.pop_front().value();
-    cout << front << endl;                // Printer '10'
-    cout << list.front().value() << endl; // Printer '5'
+  list.push_front(10);
+  std::cout << list.front().value() << std::endl; // Printer '10'
+
+  // Fjern det første elementet i listen
+  int front = list.pop_front().value();
+  std::cout << front << std::endl;                // Printer '10'
+  std::cout << list.front().value() << std::endl; // Printer '5'
 }
+
 ```
+
+Se i mappen `examples` for flere eksempler på bruk av biblioteket.
 
 ## Dokumentasjon
 
-I fremtiden er planen at dokumentasjonen skal være tilgjengelig på en nettside, men inntil videre må brukeren selv generere dokumentasjonen. Dokumentasjonen kan genereres ved hjelp av `make docs`. For å kunne generere dokumentasjonen må man ha [`make`](https://www.gnu.org/software/make/) og [`doxygen`](http://doxygen.nl/) installert.
+Planen at dokumentasjonen skal være tilgjengelig på gjennom nettside, men inntil videre må brukeren selv generere dokumentasjonen. Dokumentasjonen kan genereres ved hjelp av `make docs`. For å kunne generere dokumentasjonen må man ha [`make`](https://www.gnu.org/software/make/) og [`doxygen`](http://doxygen.nl/) installert. Når dokumentasjonen er generert finner du `index.html` filen, som er startpunktet for dokumentasjonen, i `docs` mappen.
