@@ -92,23 +92,24 @@ public:
 
 //! En lenket liste
 /*!
- * Listen sørger for at alle elementene er linket sammen ved at hvert element
- * i listen inneholder en peker til det neste elementet. Listen kan brukes som
- * en [FIFO-kø (First In First
- * Out)](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)) og en
- * [stack/LIFO-kø (Last In First
- * Out)](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)) (når man
- * trenger en stack, så passer en `std::vector` bedre enn en `List`).
+ * En liste av elementer der hvert element peker på det neste elementet i
+ * listen. Listen egner seg best som en [FIFO-kø (First In First
+ * Out)](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)) eller
+ * som en "vanlig" liste i situasjoner der man ofte trenger å sette inn verdier
+ * midt i listen. Listen kan også brukes som en [stack/LIFO-kø (Last In First
+ * Out)](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)), men en
+ * [`std::vector`](http://www.cplusplus.com/reference/vector/vector/) passer
+ * bedre i det tilfellet.
  *
- * Listen er generisk over typen `T`, altså de ulike verdiene den kan holde.
+ * Listen er generisk over typen `T`, altså typen av verdiene den inneholder.
  * Det vil si at hvis man vil definere en liste med heltall, så gjøres det med
- * `List<int>`. Videre kan man gjøre det samme for alle andre typer i C++.
+ * `List<int>`. Man kan definere en liste som inneholder vilkårlige typer.
  * Fordelen ved å bruke en generisk type, er at vi slipper å holde styr på
  * hvilken type en liste inneholder. Kompilatoren sørger for at hvis man
  * definerer en liste som inneholder heltall, så kan man kun legge til heltall
  * i listen. Dersom man prøver å legge til et flyttall i en liste med heltall
- * vil man få en kompilasjonsfeil. Resultatet av dette er at vi får et trygt
- * API som er vanskelig å misbruke.
+ * vil man få en kompilasjonsfeil. Dette forhindrer mange feil som kan oppstå
+ * hvis man holder styr på typene i listen når programmet kjører.
  *
  * ## Eksempel
  *

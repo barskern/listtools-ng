@@ -13,19 +13,21 @@ Alt som trengs for å få tilgang til biblioteket er å skrive  `#include "listt
 
 ```cpp
 int main(){
- List<float> list;
+    List<int> list;
 
- list.push_front(5);
- cout << *list.front() << endl;
+    list.push_front(5);
+    cout << list.front().value() << endl; // Printer '5'
 
- list.push_front(10);
- cout << *list.front() << endl;
+    list.push_front(10);
+    cout << list.front().value() << endl; // Printer '10'
+
+    // Fjern det første elementet i listen
+    int front = list.pop_front().value();
+    cout << front << endl;                // Printer '10'
+    cout << list.front().value() << endl; // Printer '5'
 }
 ```
 
-#### Utgangsverdier
+## Dokumentasjon
 
-```
-5
-10
-```
+I fremtiden er planen at dokumentasjonen skal være tilgjengelig på en nettside, men inntil videre må brukeren selv generere dokumentasjonen. Dokumentasjonen kan genereres ved hjelp av `make docs`. For å kunne generere dokumentasjonen må man ha [`make`](https://www.gnu.org/software/make/) og [`doxygen`](http://doxygen.nl/) installert.
