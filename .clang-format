@@ -1,7 +1,4 @@
 ---
-# LLVM er standard. Setter den eksplisitt slik at folk vet.
+# LLVM er standard.
 BasedOnStyle: LLVM
-
-# catch, else paa ny linje
-BreakBeforeBraces: Stroustrup
 ---
