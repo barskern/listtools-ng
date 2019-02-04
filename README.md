@@ -7,7 +7,7 @@
 
 ## Hvordan bruke prosjektet
 
-Alt som trengs for å få tilgang til biblioteket er å skrive  `#include "listtools-ng.h"` i ditt prosjekt.
+Alt som trengs for å få tilgang til biblioteket er å skrive  `#include "listtools-ng.h"` i ditt prosjekt, etter at du har lastet ned headerfilen.
 
 ## Eksempel
 
