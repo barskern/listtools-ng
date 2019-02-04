@@ -14,6 +14,14 @@ EXAMPLE_FLAGS=
 EXAMPLE_SRCS=$(shell find $(EXAMPLE_DIR) -name '*.cpp')
 EXAMPLE_BINS=$(patsubst $(EXAMPLE_DIR)/%.cpp,$(DEST)/%,$(EXAMPLE_SRCS))
 
+# Get the modified files in feature branches
+MODIFIED_SRCS=git diff master...HEAD --name-only --diff-filter=ACMRT listtools-ng.h examples/*.cpp tests/*.cpp
+
+# Command which checks if all modified files are formatted correctly. This
+# command will fail if any files are not formatted correctly. All filenames
+# outputted from this command are NOT formatted correctly.
+CHECK_FORMAT=$(MODIFIED_SRCS) | xargs -I {} sh -c 'clang-format -output-replacements-xml {} | grep -c "<replacement " >/dev/null && echo {}'
+
 $(DEST)/test_bin: $(TEST_SRCS)
 	@mkdir -p $(DEST)
 	@echo -e "\n---------------\nCompiling tests\n---------------\n"
@@ -36,7 +44,17 @@ docs:
 	@echo -e "\n--------------\nCompiling docs\n--------------\n"
 	doxygen doxyfile
 
+check-format:
+	@echo -e "\n-------------------\nChecking formatting\n-------------------\n"
+	@# If we get any files, some files are not formatted correctly so we exit 1
+	@# within xargs.
+	@$(CHECK_FORMAT) | xargs -I {} sh -c 'echo Filen er ikke formattert korrekt: {}; exit 1'
+
+format:
+	@echo -e "\n----------------------\nFormatting sourcefiles\n----------------------\n"
+	clang-format -i $(EXAMPLE_SRCS) $(TEST_SRCS) listtools-ng.h
+
 clean:
 	rm -rf $(DEST)
 
-.PHONY: test clean docs examples
+.PHONY: test clean docs examples format check-format
