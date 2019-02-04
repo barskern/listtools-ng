@@ -1,16 +1,6 @@
 #ifndef LISTTOOLS_NG_INCLUDE_ONCE
 #define LISTTOOLS_NG_INCLUDE_ONCE
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-//! Sjekket at et uttrykk stemmer eller kaste et unntak (exception).
-#define ASSERT(expr, msg)                                                      \
-  if (!expr) {                                                                 \
-    throw std::logic_error(msg);                                               \
-  }
-
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
 /*! \file listtools-ng.h
  *  \brief Implementasjon av en enkel lenket liste
  *
@@ -20,7 +10,7 @@
  *  kildekoden til prosjektet.
  */
 
-#include <stdexcept>
+#include <assert.h>
 
 //! En verdi som enten er tilstede eller ikke
 /*!
@@ -45,7 +35,9 @@ public:
    * \return verdien
    */
   T value() {
-    ASSERT(this->ok, "Kalte `value` på en ikke-eksisterene `Option`");
+    // Vi bruker `&&` som et triks for å få en beskrivende melding når
+    // programmet krasjer pga. denne hevdelsen.
+    assert(this->ok && "Kalte `value` på en ikke-eksisterene `Option`");
     return this->v;
   }
 
@@ -79,7 +71,7 @@ public:
   Option(T &val) : ok(true), v(&val) {}
 
   T &value() {
-    ASSERT(this->ok, "Kalte `value` på en ikke-eksisterene `Option`");
+    assert(this->ok && "Kalte `value` på en ikke-eksisterene `Option`");
     // Dette er alltid trygt fordi vi tok adressen til en referanse da vi
     // konstruerte klassen.
     return *this->v;
