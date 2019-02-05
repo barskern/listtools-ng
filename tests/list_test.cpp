@@ -3,10 +3,10 @@
 #include "../listtools-ng.h"
 
 SCENARIO("elementer kan legges til foran i listen og man kan se på dem",
-         "[List]") {
+         "[list]") {
 
   GIVEN("En tom liste") {
-    List<int> list;
+    list<int> list;
 
     REQUIRE(!list.front().has_value());
 
@@ -31,10 +31,10 @@ SCENARIO("elementer kan legges til foran i listen og man kan se på dem",
   }
 }
 
-SCENARIO("elementer kan fjernes fra starten av listen", "[List]") {
+SCENARIO("elementer kan fjernes fra starten av listen", "[list]") {
 
   GIVEN("En liste som ikke er tom") {
-    List<int> list;
+    list<int> list;
 
     list.push_front(5);
     list.push_front(10);

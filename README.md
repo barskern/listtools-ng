@@ -16,7 +16,7 @@ Alt som trengs for å få tilgang til biblioteket er å skrive  `#include "listt
 #include <iostream>
 
 int main() {
-  List<int> list;
+  list<int> list;
 
   list.push_front(5);
   std::cout << list.front().value() << std::endl; // Printer '5'

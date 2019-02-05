@@ -17,14 +17,14 @@
  * Denne klassen brukes for å definere verdier som kanskje ikke er tilstede.
  * Spesielt er dette nyttig for funksjoner som _kanskje_ returnerer en verdi.
  */
-template <class T> class Option {
+template <class T> class option {
 private:
   bool ok;
   T v;
 
 public:
-  Option() : ok(false) {}
-  Option(T val) : ok(true), v(val) {}
+  option() : ok(false) {}
+  option(T val) : ok(true), v(val) {}
 
   //! Henter ut verdien dersom den eksisterer
   /*!
@@ -37,7 +37,7 @@ public:
   T value() {
     // Vi bruker `&&` som et triks for å få en beskrivende melding når
     // programmet krasjer pga. denne hevdelsen.
-    assert(this->ok && "Kalte `value` på en ikke-eksisterene `Option`");
+    assert(this->ok && "Kalte `value` på en ikke-eksisterene `option`");
     return this->v;
   }
 
@@ -55,23 +55,23 @@ public:
   T value_or(T reserve) { return this->ok ? this->v : reserve; }
 };
 
-//! Spesialisering av `Option` for referanser
+//! Spesialisering av `option` for referanser
 /*!
- * Denne implementasjonen må til for at `Option` skal kunne inneholde en
- * referanse. Se dokumentasjonen for `Option` for informasjon om hvordan
+ * Denne implementasjonen må til for at `option` skal kunne inneholde en
+ * referanse. Se dokumentasjonen for `option` for informasjon om hvordan
  * klassen skal benyttes.
  */
-template <class T> class Option<T &> {
+template <class T> class option<T &> {
 private:
   bool ok;
   T *v;
 
 public:
-  Option() : ok(false), v(nullptr) {}
-  Option(T &val) : ok(true), v(&val) {}
+  option() : ok(false), v(nullptr) {}
+  option(T &val) : ok(true), v(&val) {}
 
   T &value() {
-    assert(this->ok && "Kalte `value` på en ikke-eksisterene `Option`");
+    assert(this->ok && "Kalte `value` på en ikke-eksisterene `option`");
     // Dette er alltid trygt fordi vi tok adressen til en referanse da vi
     // konstruerte klassen.
     return *this->v;
@@ -83,7 +83,7 @@ public:
 
   // Denne definisjonen må til for å kunne gi `value_or` en konstant istedenfor
   // en referanse til en variabel. Dette lar oss skrive `opt.value_or(2)` for
-  // `Option`'s som inneholder referanser.
+  // `option`'s som inneholder referanser.
   const T &value_or(T const &reserve) {
     // Grunnet at gcc 4.X.X ikke konkluderer med den korrekte retur-typen når
     // man benytter en ternær operatør, så må vi benytte en if/else-uttalelse.
@@ -114,7 +114,7 @@ public:
  *
  * Listen er generisk over typen `T`, altså typen av verdiene den inneholder.
  * Det vil si at hvis man vil definere en liste med heltall, så gjøres det med
- * `List<int>`. Man kan definere en liste som inneholder vilkårlige typer.
+ * `list<int>`. Man kan definere en liste som inneholder vilkårlige typer.
  * Fordelen ved å bruke en generisk type, er at vi slipper å holde styr på
  * hvilken type en liste inneholder. Kompilatoren sørger for at hvis man
  * definerer en liste som inneholder heltall, så kan man kun legge til heltall
@@ -126,7 +126,7 @@ public:
  *
  * ```cpp
  * int main(){
- *     List<int> list;
+ *     list<int> list;
  *
  *     list.push_front(5);
  *     cout << list.front().value() << endl; // Printer '5'
@@ -141,7 +141,7 @@ public:
  * }
  * ```
  */
-template <class T> class List {
+template <class T> class list {
 
   //! En node i listen som inneholder en verdi og en peker til den neste
   //! noden in listen
@@ -160,9 +160,9 @@ private:
 
 public:
   //! Lager en ny tom liste
-  List() : head(nullptr), tail(nullptr) {}
+  list() : head(nullptr), tail(nullptr) {}
   //! Sletter alle nodene i listen fra minne
-  ~List() {
+  ~list() {
     Node *current = this->head;
     // Itererer over alle nodene i listen og fjerner dem fra minne
     while (current != nullptr) {
@@ -192,24 +192,24 @@ public:
 
   //! Se på det første elementet i listen, hvis det eksisterer
   /*!
-   * \return en `Option` som inneholder en peker til det første elementet i
+   * \return en `option` som inneholder en peker til det første elementet i
    * listen dersom listen ikke er tom
    */
-  Option<T &> front() {
+  option<T &> front() {
     if (this->head == nullptr)
-      return Option<T &>();
-    return Option<T &>(this->head->value);
+      return option<T &>();
+    return option<T &>(this->head->value);
   }
 
   //! Fjern og returner det første elementet i listen, hvis det eksisterer
   /*!
-   * \return en `Option` som inneholder det første elementet dersom listen ikke
+   * \return en `option` som inneholder det første elementet dersom listen ikke
    * er tom
    */
-  Option<T> pop_front() {
-    // Listen er tom, så funksjonen returnerer en tom `Option`
+  option<T> pop_front() {
+    // Listen er tom, så funksjonen returnerer en tom `option`
     if (this->head == nullptr)
-      return Option<T>();
+      return option<T>();
 
     // Lagre verdiene fra den første noden før vi de-allokerer den
     T val = this->head->value;
@@ -221,7 +221,7 @@ public:
     if (this->head == nullptr)
       this->tail = nullptr;
 
-    return Option<T>(val);
+    return option<T>(val);
   }
 };
 

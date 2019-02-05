@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-  List<int> list;
+  list<int> list;
 
   list.push_front(5);
   std::cout << list.front().value() << std::endl; // Printer '5'

@@ -1,12 +1,12 @@
 #include "../lib/catch.hpp"
 #include "../listtools-ng.h"
 
-SCENARIO("en `Option` kan representere en verdi som kanskje er tilstede",
-         "[Option]") {
+SCENARIO("en `option` kan representere en verdi som kanskje er tilstede",
+         "[option]") {
 
-  GIVEN("en tom `Option`") {
+  GIVEN("en tom `option`") {
 
-    Option<int> empty;
+    option<int> empty;
 
     REQUIRE(!empty.has_value());
 
@@ -16,9 +16,9 @@ SCENARIO("en `Option` kan representere en verdi som kanskje er tilstede",
     }
   }
 
-  GIVEN("en `Option` med en verdi") {
+  GIVEN("en `option` med en verdi") {
 
-    Option<int> full(1);
+    option<int> full(1);
 
     REQUIRE(full.has_value());
 
@@ -38,13 +38,13 @@ SCENARIO("en `Option` kan representere en verdi som kanskje er tilstede",
   }
 }
 
-SCENARIO("en `Option` kan representere en referanse som kanskje er tilstede",
-         "[Option]") {
+SCENARIO("en `option` kan representere en referanse som kanskje er tilstede",
+         "[option]") {
 
-  GIVEN("en `Option` med en referanse") {
+  GIVEN("en `option` med en referanse") {
 
     int a = 1;
-    Option<int &> full(a);
+    option<int &> full(a);
 
     REQUIRE(full.has_value());
 
@@ -70,9 +70,9 @@ SCENARIO("en `Option` kan representere en referanse som kanskje er tilstede",
       }
     }
   }
-  GIVEN("en tom `Option` med en referanse") {
+  GIVEN("en tom `option` med en referanse") {
 
-    Option<int &> empty;
+    option<int &> empty;
 
     REQUIRE(!empty.has_value());
 
