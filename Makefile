@@ -14,44 +14,58 @@ EXAMPLE_FLAGS=
 EXAMPLE_SRCS=$(shell find $(EXAMPLE_DIR) -name '*.cpp')
 EXAMPLE_BINS=$(patsubst $(EXAMPLE_DIR)/%.cpp,$(DEST)/%,$(EXAMPLE_SRCS))
 
-# Get the modified files in feature branches
-MODIFIED_SRCS=git diff master...HEAD --name-only --diff-filter=ACMRT listtools-ng.h examples/*.cpp tests/*.cpp
-
-# Command which checks if all modified files are formatted correctly. This
-# command will fail if any files are not formatted correctly. All filenames
-# outputted from this command are NOT formatted correctly.
-CHECK_FORMAT=$(MODIFIED_SRCS) | xargs -I {} sh -c 'clang-format -output-replacements-xml {} | grep -c "<replacement " >/dev/null && echo {}'
+# Combine all cpp files into a single variable
+ALL_SRCS=$(TEST_SRCS) $(EXAMPLE_SRCS) listtools-ng.h
 
 $(DEST)/test_bin: $(TEST_SRCS)
 	@mkdir -p $(DEST)
-	@echo -e "\n---------------\nCompiling tests\n---------------\n"
+	@echo "---------------"
+	@echo "Compiling tests"
+	@echo "---------------"
 	$(CXX) $(FLAGS) -o $@ $^
 
 $(DEST)/%: $(EXAMPLE_DIR)/%.cpp
 	@mkdir -p $(DEST)
-	@echo -e "\n------------------\nCompiling examples\n------------------\n"
+	@echo "------------------"
+	@echo "Compiling examples"
+	@echo "------------------"
 	$(CXX) $(FLAGS) -o $@ $^
 
 test: $(DEST)/test_bin
-	@echo -e "\n-------------\nRunning tests\n-------------\n"
+	@echo "-------------"
+	@echo "Running tests"
+	@echo "-------------"
 	$(DEST)/test_bin $(TEST_FLAGS)
 
 examples: $(EXAMPLE_BINS)
-	@echo -e "\n----------------\nRunning examples\n----------------\n"
+	@echo "----------------"
+	@echo "Running examples"
+	@echo "----------------"
 	@$(foreach bin,$(EXAMPLE_BINS),echo "Running \"$(patsubst $(DEST)/%,%,$(bin))\""; $(bin) $(EXAMPLE_FLAGS); echo "---";)
 
 docs:
-	@echo -e "\n--------------\nCompiling docs\n--------------\n"
+	@echo "--------------"
+	@echo "Compiling docs"
+	@echo "--------------"
 	doxygen doxyfile
 
 check-format:
-	@echo -e "\n-------------------\nChecking formatting\n-------------------\n"
-	@# If we get any files, some files are not formatted correctly so we exit 1
-	@# within xargs.
-	@$(CHECK_FORMAT) | xargs -I {} sh -c 'echo Filen er ikke formattert korrekt: {}; exit 1'
+	@echo "-------------------"
+	@echo "Checking formatting"
+	@echo "-------------------"
+	@for f in $(ALL_SRCS); do \
+		echo "clang-format $$f" ; \
+		clang-format -output-replacements-xml "$$f" | grep -c "<replacement " >/dev/null ; \
+		if [ $$? -ne 1 ]; then \
+			echo "Error: Filen '$$f' har ikke riktig formattering" ; \
+			exit 1 ; \
+		fi \
+	done
 
 format:
-	@echo -e "\n----------------------\nFormatting sourcefiles\n----------------------\n"
+	@echo "----------------------"
+	@echo "Formatting sourcefiles"
+	@echo "----------------------"
 	clang-format -i $(EXAMPLE_SRCS) $(TEST_SRCS) listtools-ng.h
 
 clean:
