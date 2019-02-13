@@ -7,7 +7,6 @@ env:
 - JOB_TYPE=test
 - JOB_TYPE=examples
 script: make $JOB_TYPE
-before_deploy: sudo apt-get install -y doxygen doxygen-doc doxygen-latex doxygen-gui graphviz
 jobs:
     include:
     - script: make check-format
@@ -16,6 +15,7 @@ jobs:
       name: "Deploy documentation"
       script: make docs
       deploy:
+        before_deploy: sudo apt-get install -y doxygen doxygen-doc doxygen-latex doxygen-gui graphviz
         provider: pages
         local-dir: docs/
         skip-cleanup: true
