@@ -37,4 +37,6 @@ Se i mappen `examples` for flere eksempler på bruk av biblioteket.
 
 ## Dokumentasjon
 
-Planen at dokumentasjonen skal være tilgjengelig på gjennom nettside, men inntil videre må brukeren selv generere dokumentasjonen. Dokumentasjonen kan genereres ved hjelp av `make docs`. For å kunne generere dokumentasjonen må man ha [`make`](https://www.gnu.org/software/make/) og [`doxygen`](http://doxygen.nl/) installert. Når dokumentasjonen er generert finner du `index.html` filen, som er startpunktet for dokumentasjonen, i `docs` mappen.
+Dokumentasjonen ligger på [barskern.no/listtools-ng](http://barskern.no/listtools-ng).
+
+Man kan også generere dokumentasjonen lokalt. For å kunne generere dokumentasjonen må man ha [`make`](https://www.gnu.org/software/make/) og [`doxygen`](http://doxygen.nl/) installert. Når disse programmene er installert kan man kjøre `make docs`. Deretter finnes dokumentasjonen i `docs`-mappen. Ved å åpne `docs/index.html` så finner man hovedsiden.
