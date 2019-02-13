@@ -1,24 +1,24 @@
 language: cpp
 compiler:
-    - clang
-    - gcc
+- clang
+- gcc
+env:
+- JOB_TYPE=test
+- JOB_TYPE=examples
+script: make $JOB_TYPE
 notifications:
     email: false
 jobs:
     include:
-        - script: make test
-          name: "Run unit tests"
-        - script: make examples
-          name: "Run examples"
-        - script: make check-format
-          name: "Check formatting"
-        - stage: deploy
-          name: "Deploy documentation"
-          script: skip
-          deploy:
-            provider: pages
-            skip-cleanup: true
-            github-token: $GITHUB_TOKEN
-            keep-history: true
-            on:
-              branch: master
+    - script: make check-format
+      name: "Check formatting"
+    - stage: deploy
+      name: "Deploy documentation"
+      script: skip
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
+        on:
+          branch: master
