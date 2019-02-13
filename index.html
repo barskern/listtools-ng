@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>listtools-ng: Hovedside</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">listtools-ng
+   </div>
+   <div id="projectbrief">Et bibliotek bestående av en headerfil som implementerer en lenket liste</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generert av Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Søk');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>Hovedside</span></a></li>
+      <li><a href="annotated.html"><span>Klasser</span></a></li>
+      <li><a href="files.html"><span>Filer</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Søk" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klasser</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Filer</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funksjoner</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">listtools-ng Dokumentasjon</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a href="https://travis-ci.com/barskern/listtools-ng">![Build Status](https://travis-ci.com/barskern/listtools-ng.svg?token=S3nA1j4MQ8fzYt5KzyxX&amp;branch=master)</a> </p>
+<div class="image">
+<img src="https://img.shields.io/badge/status-under--utvikling-orange.svg" />
+</div>
+<p><b>listtools-ng</b> er et bibliotek bestående av en headerfil som implementerer en enkel lenket liste. Hovedmålet med biblioteket er å gi en <b>enkel</b>, <b>minimal</b> og <b>elegant</b> abstraksjon over en lenket liste.</p>
+<h2>Hvordan bruke prosjektet</h2>
+<p>Alt som trengs for å få tilgang til biblioteket er å skrive <code>#include "listtools-ng.h"</code> i ditt prosjekt, etter at du har lastet ned headerfilen.</p>
+<h2>Eksempel</h2>
+<p>```cpp #include "listtools-ng.h" #include &lt;iostream&gt;</p>
+<p>int main() { list&lt;int&gt; list;</p>
+<p>list.push_front(5); std::cout &lt;&lt; <a class="el" href="classlist.html#ad4a591ef3ddb9fdcd12515616131d9a5" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>.value() &lt;&lt; std::endl; // Printer '5'</p>
+<p>list.push_front(10); std::cout &lt;&lt; <a class="el" href="classlist.html#ad4a591ef3ddb9fdcd12515616131d9a5" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>.value() &lt;&lt; std::endl; // Printer '10'</p>
+<p>// Fjern det første elementet i listen int front = <a class="el" href="classlist.html#a879dd440bd18a3477c75d404fe29c046" title="Fjern og returner det første elementet i listen, hvis det eksisterer. ">list.pop_front()</a>.value(); std::cout &lt;&lt; front &lt;&lt; std::endl; // Printer '10' std::cout &lt;&lt; <a class="el" href="classlist.html#ad4a591ef3ddb9fdcd12515616131d9a5" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>.value() &lt;&lt; std::endl; // Printer '5' }</p>
+<p>```</p>
+<p>Se i mappen <code>examples</code> for flere eksempler på bruk av biblioteket.</p>
+<h2>Dokumentasjon</h2>
+<p>Planen at dokumentasjonen skal være tilgjengelig på gjennom nettside, men inntil videre må brukeren selv generere dokumentasjonen. Dokumentasjonen kan genereres ved hjelp av <code>make docs</code>. For å kunne generere dokumentasjonen må man ha <a href="https://www.gnu.org/software/make/">`make`</a> og <a href="http://doxygen.nl/">`doxygen`</a> installert. Når dokumentasjonen er generert finner du <code>index.html</code> filen, som er startpunktet for dokumentasjonen, i <code>docs</code> mappen. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generert av &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>
