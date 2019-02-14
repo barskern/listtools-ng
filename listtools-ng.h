@@ -23,7 +23,9 @@ private:
   T v;
 
 public:
+  //! Lag en tom `option`
   option() : ok(false) {}
+  //! Lag en `option` som inneholder en verdi
   option(T val) : ok(true), v(val) {}
 
   //! Henter ut verdien dersom den eksisterer
@@ -55,12 +57,10 @@ public:
   T value_or(T reserve) { return this->ok ? this->v : reserve; }
 };
 
-//! Spesialisering av `option` for referanser
-/*!
- * Denne implementasjonen må til for at `option` skal kunne inneholde en
- * referanse. Se dokumentasjonen for `option` for informasjon om hvordan
- * klassen skal benyttes.
- */
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+// Spesialisering av `option` for referanser. Denne implementasjonen må til for
+// at `option` skal kunne inneholde en referanse
 template <class T> class option<T &> {
 private:
   bool ok;
@@ -100,6 +100,8 @@ public:
     }
   }
 };
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 //! En lenket liste
 /*!
