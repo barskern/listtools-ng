@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pop_5ffront',['pop_front',['../classlist.html#a879dd440bd18a3477c75d404fe29c046',1,'list']]],
-  ['push_5ffront',['push_front',['../classlist.html#a1cadcbfbac65a50bdcc46c57cc2ebe80',1,'list']]]
+  ['option',['option',['../classoption.html#afbbc42194240953f99e4cb51a4ccb7d5',1,'option::option()'],['../classoption.html#a3d5ab71f43ee4b914c9abd9d89c5f8f3',1,'option::option(T val)']]]
 ];

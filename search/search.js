@@ -10,7 +10,7 @@ var indexSectionsWithContent =
   0: "fhlopv~",
   1: "lo",
   2: "l",
-  3: "fhlpv~"
+  3: "fhlopv~"
 };
 
 var indexSectionNames =
