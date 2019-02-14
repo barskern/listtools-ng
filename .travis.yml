@@ -10,10 +10,12 @@ script: make $JOB_TYPE
 jobs:
     include:
     - script: make check-format
-      name: "Check formatting"
+      name: "Check Formatting"
     - stage: deploy
-      name: "Deploy documentation"
-      script: sudo apt-get install -y doxygen doxygen-doc doxygen-latex doxygen-gui graphviz && make docs
+      if: type = push AND branch = master
+      before_script: sudo apt-get install -y doxygen doxygen-doc doxygen-latex doxygen-gui graphviz
+      script: make docs
+      name: "Deploy Documentation"
       deploy:
         provider: pages
         local-dir: docs/
