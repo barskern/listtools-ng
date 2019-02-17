@@ -96,7 +96,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Søk');
 <p>Se i mappen <code>examples</code> for flere eksempler på bruk av biblioteket.</p>
 <h2>Dokumentasjon</h2>
 <p>Dokumentasjonen ligger på <a href="http://barskern.no/listtools-ng">barskern.no/listtools-ng</a>.</p>
-<p>Man kan også generere dokumentasjonen lokalt. For å kunne generere dokumentasjonen må man ha <a href="https://www.gnu.org/software/make/">`make`</a> og <a href="http://doxygen.nl/">`doxygen`</a> installert. Når disse programmene er installert kan man kjøre <code>make docs</code>. Deretter finnes dokumentasjonen i <code>docs</code>-mappen. Ved å åpne <code>docs/index.html</code> så finner man hovedsiden. </p>
+<p>Man kan også generere dokumentasjonen lokalt. For å kunne generere dokumentasjonen må man ha <a href="http://doxygen.nl/">`doxygen`</a> installert. Man kan enten kjøre <code>make docs</code> eller følgende kommandoer for CMake:</p>
+<p>```sh cmake -B build -D BUILD_DOC=yes . cmake &ndash;build build ```</p>
+<p>Den genererte dokumentasjonen lages <code>docs</code>-mappen. Ved å åpne <code>docs/index.html</code> så finner man hovedsiden.</p>
+<h2>Kjøre tester</h2>
+<p>For å kjøre testene kan man enten kjøre <code>make tests</code> eller følgende kommandoer for CMake:</p>
+<p>```sh cmake -B build . cmake &ndash;build build ./build/tests/ListTests ``` </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
