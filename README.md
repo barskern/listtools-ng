@@ -39,4 +39,21 @@ Se i mappen `examples` for flere eksempler på bruk av biblioteket.
 
 Dokumentasjonen ligger på [barskern.no/listtools-ng](http://barskern.no/listtools-ng).
 
-Man kan også generere dokumentasjonen lokalt. For å kunne generere dokumentasjonen må man ha [`make`](https://www.gnu.org/software/make/) og [`doxygen`](http://doxygen.nl/) installert. Når disse programmene er installert kan man kjøre `make docs`. Deretter finnes dokumentasjonen i `docs`-mappen. Ved å åpne `docs/index.html` så finner man hovedsiden.
+Man kan også generere dokumentasjonen lokalt. For å kunne generere dokumentasjonen må man ha [`doxygen`](http://doxygen.nl/) installert. Man kan enten kjøre `make docs` eller følgende kommandoer for CMake:
+
+```sh
+cmake -B build -D BUILD_DOC=yes .
+cmake --build build
+```
+
+Den genererte dokumentasjonen lages `docs`-mappen. Ved å åpne `docs/index.html` så finner man hovedsiden.
+
+## Kjøre tester
+
+For å kjøre testene kan man enten kjøre `make tests` eller følgende kommandoer for CMake:
+
+```sh
+cmake -B build .
+cmake --build build
+./build/tests/ListTests
+```
