@@ -47,7 +47,7 @@ docs:
 	@echo "--------------"
 	@echo "Compiling docs"
 	@echo "--------------"
-	doxygen doxyfile
+	doxygen Doxyfile
 
 check-format:
 	@echo "-------------------"

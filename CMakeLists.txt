@@ -28,7 +28,7 @@ if (BUILD_DOC)
   find_package(Doxygen)
 
   if (DOXYGEN_FOUND)
-    set(DOXYGEN_CONF ${CMAKE_CURRENT_SOURCE_DIR}/doxyfile)
+    set(DOXYGEN_CONF ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
 
     message("Doxygen build started")
 
