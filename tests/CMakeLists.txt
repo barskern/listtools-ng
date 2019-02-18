@@ -1,12 +1,10 @@
-# Inkluder våre og lenke til Catch2 [1]
-set(CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-add_library(Catch INTERFACE)
-target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
-
 # Legg till testfilene
 add_executable(ListTests list_test.cpp option_test.cpp)
 
 # Lenke filene opp mot Catch2
-target_link_libraries(ListTests Catch)
+target_link_libraries(ListTests Catch2::Catch2)
 
-# [1] https://github.com/catchorg/Catch2/blob/master/docs/cmake-integration.md
+# Legg til støtte for bruk av CTest
+include(CTest)
+include(${CMAKE_SOURCE_DIR}/lib/Catch2/contrib/Catch.cmake)
+catch_discover_tests(ListTests)

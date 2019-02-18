@@ -1,5 +1,5 @@
-#include "../lib/catch.hpp"
 #include "../listtools-ng.h"
+#include <catch2/catch.hpp>
 
 SCENARIO("en `option` kan representere en verdi som kanskje er tilstede",
          "[option]") {

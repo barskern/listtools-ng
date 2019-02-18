@@ -1,5 +1,5 @@
 DEST=build
-FLAGS=-Wall -Wextra -std=c++11
+FLAGS=-Wall -Wextra -std=c++11 -Ilib/Catch2/single_include
 
 TEST_DIR=tests
 TEST_FLAGS=--durations yes

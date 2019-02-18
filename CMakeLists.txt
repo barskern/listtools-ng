@@ -16,7 +16,9 @@ add_library(listtools-ng INTERFACE)
 target_include_directories(listtools-ng INTERFACE listtools-ng.h)
 
 
-# Legg til test program
+# Inkludert Catch2 test-bibliotek
+add_subdirectory(lib/Catch2)
+# Legg til test program og inkluder våre lenke til Catch2 [3]
 add_subdirectory(tests)
 
 
@@ -45,3 +47,4 @@ endif (BUILD_DOC)
 
 # [1] http://mariobadr.com/creating-a-header-only-library-with-cmake.html
 # [2] https://vicrucann.github.io/tutorials/quick-cmake-doxygen/
+# [3] https://github.com/catchorg/Catch2/blob/master/docs/cmake-integration.md
