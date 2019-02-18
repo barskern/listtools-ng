@@ -97,11 +97,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Søk');
 <h2>Dokumentasjon</h2>
 <p>Dokumentasjonen ligger på <a href="http://barskern.no/listtools-ng">barskern.no/listtools-ng</a>.</p>
 <p>Man kan også generere dokumentasjonen lokalt. For å kunne generere dokumentasjonen må man ha <a href="http://doxygen.nl/">`doxygen`</a> installert. Man kan enten kjøre <code>make docs</code> eller følgende kommandoer for CMake:</p>
-<p>```sh cmake -B build -D BUILD_DOC=yes . cmake &ndash;build build ```</p>
+<p>```sh cmake -Bbuild -H. -DBUILD_DOC=yes . cmake &ndash;build build ```</p>
 <p>Den genererte dokumentasjonen lages <code>docs</code>-mappen. Ved å åpne <code>docs/index.html</code> så finner man hovedsiden.</p>
 <h2>Kjøre tester</h2>
 <p>For å kjøre testene kan man enten kjøre <code>make tests</code> eller følgende kommandoer for CMake:</p>
-<p>```sh cmake -B build . cmake &ndash;build build ./build/tests/ListTests ``` </p>
+<p>```sh cmake -Bbuild -H. . cmake &ndash;build build ./build/tests/ListTests ``` </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
