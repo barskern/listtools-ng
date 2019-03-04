@@ -30,10 +30,6 @@ public:
 
   //! Henter ut verdien dersom den eksisterer
   /*!
-   * _**NB!** Dersom verdien ikke eksisterer så kastes det et unntak
-   * (exception) av typen_
-   * [`std::logic_error`](http://www.cplusplus.com/reference/stdexcept/logic_error/).
-   *
    * \return verdien
    */
   T value() {
