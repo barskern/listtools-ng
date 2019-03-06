@@ -12,92 +12,22 @@
 
 #include <assert.h>
 
-//! En verdi som enten er tilstede eller ikke
-/*!
- * Denne klassen brukes for å definere verdier som kanskje ikke er tilstede.
- * Spesielt er dette nyttig for funksjoner som _kanskje_ returnerer en verdi.
- */
-template <class T> class option {
-private:
-  bool ok;
-  T v;
+//! En abstrakt klasse som kan arves for å definere et element som kan høre til
+//! i en liste.
+class element {
+  char m_type; //!< Bokstav som definerer typen til elementet.
 
 public:
-  //! Lag en tom `option`
-  option() : ok(false) {}
-  //! Lag en `option` som inneholder en verdi
-  option(T val) : ok(true), v(val) {}
+  //! Lage et element med den gitte typen.
+  element(char type) : m_type(type) {}
+  virtual ~element() {}
 
-  //! Henter ut verdien dersom den eksisterer
+  //! Returnerer typen til elementet. Se `element_type` for mer info.
   /*!
-   * \return verdien
+   * \returns En bokstav som representerer typen til elementet.
    */
-  T value() {
-    // Vi bruker `&&` som et triks for å få en beskrivende melding når
-    // programmet krasjer pga. denne hevdelsen.
-    assert(this->ok && "Kalte `value` på en ikke-eksisterene `option`");
-    return this->v;
-  }
-
-  //! Sjekker om verdien eksisterer
-  /*!
-   * \return `true` hvis verdien eksisterer, ellers `false`
-   */
-  bool has_value() { return this->ok; }
-
-  //! Gi en reserve verdi som vil bli returnert dersom verdien ikke eksisterer
-  /*!
-   * \param reserve verdien
-   * \return verdien hvis den eksisterer, ellers reserve verdien
-   */
-  T value_or(T reserve) { return this->ok ? this->v : reserve; }
+  char type() const { return m_type; }
 };
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-// Spesialisering av `option` for referanser. Denne implementasjonen må til for
-// at `option` skal kunne inneholde en referanse
-template <class T> class option<T &> {
-private:
-  bool ok;
-  T *v;
-
-public:
-  option() : ok(false), v(nullptr) {}
-  option(T &val) : ok(true), v(&val) {}
-
-  T &value() {
-    assert(this->ok && "Kalte `value` på en ikke-eksisterene `option`");
-    // Dette er alltid trygt fordi vi tok adressen til en referanse da vi
-    // konstruerte klassen.
-    return *this->v;
-  }
-
-  bool has_value() { return this->ok; }
-
-  T &value_or(T &reserve) { return this->ok ? *this->v : reserve; }
-
-  // Denne definisjonen må til for å kunne gi `value_or` en konstant istedenfor
-  // en referanse til en variabel. Dette lar oss skrive `opt.value_or(2)` for
-  // `option`'s som inneholder referanser.
-  const T &value_or(T const &reserve) {
-    // Grunnet at gcc 4.X.X ikke konkluderer med den korrekte retur-typen når
-    // man benytter en ternær operatør, så må vi benytte en if/else-uttalelse.
-    // Feilen gjør at vi refererer til en lokal variabel som ikke eksisterer,
-    // til tross for at den returneres "by-value", og dermed får man feil
-    // retur-verdi.
-    //
-    // Ref: https://gcc.gnu.org/ml/gcc-bugs/2000-03/msg00353.html
-    // Ref: https://gcc.gnu.org/ml/gcc-bugs/2000-03/msg00485.html
-    if (this->ok) {
-      return *this->v;
-    } else {
-      return reserve;
-    }
-  }
-};
-
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 //! En lenket liste
 /*!
@@ -110,116 +40,117 @@ public:
  * [`std::vector`](http://www.cplusplus.com/reference/vector/vector/) passer
  * bedre i det tilfellet.
  *
- * Listen er generisk over typen `T`, altså typen av verdiene den inneholder.
- * Det vil si at hvis man vil definere en liste med heltall, så gjøres det med
- * `list<int>`. Man kan definere en liste som inneholder vilkårlige typer.
- * Fordelen ved å bruke en generisk type, er at vi slipper å holde styr på
- * hvilken type en liste inneholder. Kompilatoren sørger for at hvis man
- * definerer en liste som inneholder heltall, så kan man kun legge til heltall
- * i listen. Dersom man prøver å legge til et flyttall i en liste med heltall
- * vil man få en kompilasjonsfeil. Dette forhindrer mange feil som kan oppstå
- * hvis man holder styr på typene i listen når programmet kjører.
- *
  * ## Eksempel
  *
  * ```cpp
- * int main(){
- *     list<int> list;
+ * #include "listtools-ng.h"
+ * #include <iostream>
  *
- *     list.push_front(5);
- *     cout << list.front().value() << endl; // Printer '5'
+ * struct el : public element {
+ *   int m_val;
  *
- *     list.push_front(10);
- *     cout << list.front().value() << endl; // Printer '10'
+ *   el(int val) : element('E'), m_val(val) {}
+ * };
  *
- *     // Fjern det første elementet i listen
- *     int front = list.pop_front().value();
- *     cout << front << endl;                // Printer '10'
- *     cout << list.front().value() << endl; // Printer '5'
+ * int main() {
+ *   list list;
+ *
+ *   list.push_front(new el(5));
+ *   std::cout << ((el *)list.front())->m_val << std::endl; // Printer '5'
+ *
+ *   list.push_front(new el(10));
+ *   std::cout << ((el *)list.front())->m_val << std::endl; // Printer '10'
+ *
+ *   // Fjern det første elementet i listen
+ *   el *front = (el *)list.pop_front();
+ *   std::cout << front->m_val << std::endl;                // Printer '10'
+ *   std::cout << ((el *)list.front())->m_val << std::endl; // Printer '5'
  * }
  * ```
  */
-template <class T> class list {
+class list {
 
   //! En node i listen som inneholder en verdi og en peker til den neste
   //! noden in listen
   struct Node {
     //! Verdien til denne noden
-    T value;
+    element *value;
     //! En peker til neste node
     Node *next;
   };
 
 private:
   //! Det første elementet i listen
-  Node *head;
+  Node *m_head;
   //! Det siste elementet i listen
-  Node *tail;
+  Node *m_tail;
 
 public:
   //! Lager en ny tom liste
-  list() : head(nullptr), tail(nullptr) {}
+  list() : m_head(nullptr), m_tail(nullptr) {}
   //! Sletter alle nodene i listen fra minne
   ~list() {
-    Node *current = this->head;
-    // Itererer over alle nodene i listen og fjerner dem fra minne
+    Node *current = m_head;
+    // Itererer over alle nodene i listen og fjern dem fra minne.
     while (current != nullptr) {
       Node *tmp = current->next;
+      delete current->value;
       delete current;
       current = tmp;
     }
   }
 
-  //! Legg til et nytt element foran i listen
+  //! Legg til et nytt element foran i listen.
+  //!
+  //! **NB!** `new_value` må være allokert med `new`, og så lenge elementet er
+  //! en del av listen så vil det bli deallokert når listen ødelegges.
   /*!
-   * \param new_value verdien som skal legges foran i listen
+   * \param new_value En peker til verdien som skal legges foran i listen.
    */
-  void push_front(T new_value) {
-    // Lag en ny node som peker på det nåværende hodet av listen
+  void push_front(element *new_value) {
+    // Lag en ny node som peker på det nåværende hodet av listen.
     Node *new_head = new Node{
         new_value,
-        this->head,
+        m_head,
     };
-    this->head = new_head;
+    m_head = new_head;
 
-    // Listen var tom, så den nye noden er både hodet og halen
-    if (this->tail == nullptr) {
-      this->tail = this->head;
+    if (m_tail == nullptr) {
+      // Listen er tom, så den nye noden er både hodet og halen.
+      m_tail = m_head;
     }
   }
 
-  //! Se på det første elementet i listen, hvis det eksisterer
+  //! Se på det første elementet i listen, hvis det eksisterer.
   /*!
-   * \return en `option` som inneholder en peker til det første elementet i
-   * listen dersom listen ikke er tom
+   * \return En peker til det første elementet i listen, eller `nullptr` hvis
+   * listen er tom.
    */
-  option<T &> front() {
-    if (this->head == nullptr)
-      return option<T &>();
-    return option<T &>(this->head->value);
-  }
+  element *front() { return m_head != nullptr ? m_head->value : nullptr; }
 
-  //! Fjern og returner det første elementet i listen, hvis det eksisterer
+  //! Fjern og returner det første elementet i listen, hvis det eksisterer.
+  //!
+  //! **NB!** Det er opp til brukeren å deallokere elementet med `delete`.
   /*!
-   * \return en `option` som inneholder det første elementet dersom listen ikke
-   * er tom
+   * \return En peker til det første elementet i listen, ellers `nullptr` hvis
+   * listen er tom.
    */
-  option<T> pop_front() {
-    // Listen er tom, så funksjonen returnerer en tom `option`
-    if (this->head == nullptr)
-      return option<T>();
+  element *pop_front() {
+    if (m_head == nullptr)
+      return nullptr;
 
-    // Lagre verdiene fra den første noden før vi de-allokerer den
-    T val = this->head->value;
-    Node *new_head = this->head->next;
-    delete this->head;
+    // Lagre verdiene fra den første noden før vi deallokerer den.
+    element *val = m_head->value;
+    Node *new_head = m_head->next;
+    delete m_head;
 
-    this->head = new_head;
-    // Hvis det nye hodet er null, så betyr det at listen er tom
-    if (this->head == nullptr)
-      this->tail = nullptr;
+    m_head = new_head;
 
-    return option<T>(val);
+    if (m_head == nullptr)
+      // Listen er tom siden det nye hodet er tomt.
+      m_tail = nullptr;
+
+    return val;
   }
 };
 
