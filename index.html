@@ -88,10 +88,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Søk');
 <p>Alt som trengs for å få tilgang til biblioteket er å skrive <code>#include "listtools-ng.h"</code> i ditt prosjekt, etter at du har lastet ned headerfilen.</p>
 <h2>Eksempel</h2>
 <p>```cpp #include "listtools-ng.h" #include &lt;iostream&gt;</p>
-<p>int main() { list&lt;int&gt; list;</p>
-<p>list.push_front(5); std::cout &lt;&lt; <a class="el" href="classlist.html#ad4a591ef3ddb9fdcd12515616131d9a5" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>.value() &lt;&lt; std::endl; // Printer '5'</p>
-<p>list.push_front(10); std::cout &lt;&lt; <a class="el" href="classlist.html#ad4a591ef3ddb9fdcd12515616131d9a5" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>.value() &lt;&lt; std::endl; // Printer '10'</p>
-<p>// Fjern det første elementet i listen int front = <a class="el" href="classlist.html#a879dd440bd18a3477c75d404fe29c046" title="Fjern og returner det første elementet i listen, hvis det eksisterer. ">list.pop_front()</a>.value(); std::cout &lt;&lt; front &lt;&lt; std::endl; // Printer '10' std::cout &lt;&lt; <a class="el" href="classlist.html#ad4a591ef3ddb9fdcd12515616131d9a5" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>.value() &lt;&lt; std::endl; // Printer '5' }</p>
+<p>struct el : public element { int m_val;</p>
+<p>el(int val) : element('E'), m_val(val) {} };</p>
+<p>int main() { list list;</p>
+<p>list.push_front(new el(5)); std::cout &lt;&lt; ((el *)<a class="el" href="classlist.html#a58377156493f08fd86509a79966b5a92" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>)-&gt;m_val &lt;&lt; std::endl; // Printer '5'</p>
+<p>list.push_front(new el(10)); std::cout &lt;&lt; ((el *)<a class="el" href="classlist.html#a58377156493f08fd86509a79966b5a92" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>)-&gt;m_val &lt;&lt; std::endl; // Printer '10'</p>
+<p>// Fjern det første elementet i listen el *front = (el *)<a class="el" href="classlist.html#ab746980d3cb45f8a9f88c8af0ad8af47">list.pop_front()</a>; std::cout &lt;&lt; front-&gt;m_val &lt;&lt; std::endl; // Printer '10' std::cout &lt;&lt; ((el *)<a class="el" href="classlist.html#a58377156493f08fd86509a79966b5a92" title="Se på det første elementet i listen, hvis det eksisterer. ">list.front()</a>)-&gt;m_val &lt;&lt; std::endl; // Printer '5' }</p>
 <p>```</p>
 <p>Se i mappen <code>examples</code> for flere eksempler på bruk av biblioteket.</p>
 <h2>Dokumentasjon</h2>

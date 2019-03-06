@@ -7,10 +7,10 @@
 
 var indexSectionsWithContent =
 {
-  0: "fhlopv~",
-  1: "lo",
+  0: "eflpt~",
+  1: "el",
   2: "l",
-  3: "fhlopv~"
+  3: "eflpt~"
 };
 
 var indexSectionNames =
