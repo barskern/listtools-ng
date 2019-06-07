@@ -1,5 +1,5 @@
 # Legg till testfilene
-add_executable(ListTests list_test.cpp option_test.cpp)
+add_executable(ListTests list_test.cpp)
 
 # Lenke filene opp mot Catch2
 target_link_libraries(ListTests Catch2::Catch2)
