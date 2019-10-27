@@ -13,11 +13,15 @@ jobs:
       name: "Check Formatting"
     - stage: deploy
       if: type = push AND branch = master
-      before_script:
-        - sudo apt-get install -y doxygen doxygen-doc doxygen-latex doxygen-gui graphviz
-        - cmake -Bbuild -H. .
-        - cmake --build build --target docs
-      script: make docs
+      addons:
+        apt:
+          packages:
+            - doxygen
+            - doxygen-latex
+            - graphviz
+      script:
+        - cmake -H. -Bbuild
+        - cmake --build build --clean-first --target docs
       name: "Deploy Documentation"
       deploy:
         provider: pages

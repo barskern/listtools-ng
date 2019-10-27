@@ -11,7 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(
   listtools-ng
   LANGUAGES CXX
-  VERSION 0.0.1)
+  VERSION 0.0.1
+  HOMEPAGE_URL http://barskern.no/listtools-ng
+  DESCRIPTION "Et bibliotek bestående av en headerfil som implementerer en lenket liste")
 
 # Legg til våre filer og eksporterer biblioteket [1]
 # TODO: Teste mot en ekstern prosjekt som tar listtools-ng som bibliotek

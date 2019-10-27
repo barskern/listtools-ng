@@ -48,7 +48,7 @@ Dokumentasjonen ligger på [barskern.no/listtools-ng](http://barskern.no/listtoo
 Man kan også generere dokumentasjonen lokalt. For å kunne generere dokumentasjonen må man ha [`doxygen`](http://doxygen.nl/) installert. Man kan enten kjøre `make docs` eller følgende kommandoer for CMake:
 
 ```sh
-cmake -Bbuild -H. .
+cmake -H. -Bbuild
 cmake --build build --target docs
 ```
 
@@ -59,7 +59,7 @@ Den genererte dokumentasjonen lages `build/html`-mappen. Ved å åpne `build/htm
 For å kjøre testene kan man enten kjøre `make tests` eller følgende kommandoer for CMake:
 
 ```sh
-cmake -Bbuild -H. .
+cmake -H. -Bbuild
 cmake --build build
 ./build/tests/ListTests
 ```
